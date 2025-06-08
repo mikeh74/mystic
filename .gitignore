@@ -1,0 +1,6 @@
+db.sqlite3
+*.pyc
+__pycache__/
+
+# If you are using a virtual environment, you might want to ignore it as well
+.venv/
