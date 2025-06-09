@@ -3,6 +3,20 @@
 {% block title %}News{% endblock %}
 
 {% block content %}
+
+<h1>Categories</h1>
+
+<ul>
+  <li>
+    <a href="{% url 'news:news_list' %}">All News</a>
+  </li>
+  {% for category in categories %}
+  <li>
+    <a href="{% url 'news:news_list' %}?category={{ category.id }}">{{ category.name }}</a>
+  </li>
+  {% endfor %}
+</ul>
+
 <h1>News List</h1>
 <ul>
   {% for news in news_list %}

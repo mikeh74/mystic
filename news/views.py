@@ -1,24 +1,38 @@
-from django.shortcuts import render
-
-# Create the views for the news app
-from django.views.generic import ListView, DetailView
-from news.models import News
+from django.shortcuts import render, get_object_or_404
+from news.models import News, Category
 
 
-class NewsListView(ListView):
-    model = News
-    template_name = "news/news_list.html"
-    context_object_name = "news_list"
-    paginate_by = 10  # Number of news items per page
+def news_list(request):
+    news_list = News.objects.all()
+    page = request.GET.get("page", 1)
+    paginate_by = 10
+    start = (int(page) - 1) * paginate_by
+    end = start + paginate_by
+ 
+    # Get selected categories from the request
+    selected_category = request.GET.get("category")
+    if selected_category:
+        news_list = news_list.filter(category=selected_category)
 
-    def get_queryset(self):
-        return News.objects.all()
+    context = {
+        "categories": Category.objects.all(),
+        "news_list": news_list[start:end],
+    }
+
+    return render(
+        request,
+        "news/news_list.html",
+        context,
+    )
 
 
-class NewsDetailView(DetailView):
-    model = News
-    template_name = "news/news_detail.html"
-    context_object_name = "news_item"
-
-    def get_queryset(self):
-        return News.objects.all()
+def news_detail(request, pk):
+    news_item = get_object_or_404(News, pk=pk)
+    context = {
+        "object": news_item,
+    }
+    return render(
+        request,
+        "news/news_detail.html",
+        context,
+    )
