@@ -9,7 +9,21 @@
   {% for news in news_list %}
   <li>
     <a href="{% url 'news:news_detail' news.id %}">{{ news.title }}</a>
-    <p>{{ news.content|truncatewords:20 }}</p>
+    <p>{{ news.article|truncatewords:20 }}</p>
+
+    {% comment %}
+
+    Available fields:
+
+    news.id
+    news.title
+    news.article
+    news.image
+    news.published_date
+    news.auhtor
+
+    {% endcomment %}
+
   </li>
   {% endfor %}
 </ul>
