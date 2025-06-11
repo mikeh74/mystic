@@ -26,7 +26,7 @@ def news_list(request):
 
 
 def news_detail(request, pk):
-    context = []
+    context = {}
     return render(
         request,
         "news/news_detail.html",
