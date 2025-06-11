@@ -21,7 +21,9 @@ from django.conf import settings
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # Include the news app URLs
+    path("", include("news.urls")),  # Default path for the news app
+    path("admin/", admin.site.urls),
 ]
 
 # This is only needed when using runserver.
